@@ -2,159 +2,129 @@
 
 fstream fp;
 student st;
+extern Menu &menu;
+extern char* dbc;
 
-void write_student()
+
+void display_single_student(string n)
 {
-    fp.open("student.dat",ios::out|ios::app);
-    st.getdata();
-    fp.write((char*)&st,sizeof(student));
-    fp.close();
-    cout<<"\n\nstudent record Has Been Created ";
-    getch();
+	Display *con = new ConcreteDisplay();
+	Decorator *dec = new DisplaySingle(con);
+	dec->stuNo = n;
+	dec->Operation();
+	delete con;
+	delete dec;
 }
 
 void display_all()
 {
-    system("cls");
-    cout<<"\n\n\n\t\tDISPLAY ALL RECORD !!!\n\n";
-    fp.open("student.dat",ios::in);
-    while(fp.read((char*)&st,sizeof(student)))
-    {
-        st.showdata();
-        cout<<"\n\n====================================\n";
-        getch();
-    }
-    fp.close();
-    getch();
+	system("cls");
+
+	Display *con = new ConcreteDisplay();
+	Decorator *dec = new DisplayAll(con);
+
+	dec->Operation();
+
+	delete con;
+	delete dec;
+	getch();
 }
 
-void display_sp(int n)
+void insert_student_grade()
 {
-    int flag=0;
-    fp.open("student.dat",ios::in);
-    while(fp.read((char*)&st,sizeof(student)))
-    {
-        if(st.retrollno()==n)
-        {
-            system("cls");
-            st.showdata();
-            flag=1;
-        }
-    }
-    fp.close();
-    if(flag==0)
-        cout<<"\n\nrecord not exist";
-    getch();
+	system("cls");
+	Modify *sub = new InsertGrade();
+	CheckUserType *p = new CheckUserType(sub);
+	
+	p->Reuqest();
+	
+	delete sub;
+	delete p;
+	getch();
 }
 
-void modify_student()
+void modify_student_grade()
 {
-    int no,found=0;
-    system("cls");
-    cout<<"\n\n\tTo Modify ";
-    cout<<"\n\n\tPlease Enter The roll number of student";
-    cin>>no;
-    fp.open("student.dat",ios::in|ios::out);
-    while(fp.read((char*)&st,sizeof(student)) && found==0)
-    {
-        if(st.retrollno()==no)
-        {
-            st.showdata();
-            cout<<"\nPlease Enter The New Details of student"<<endl;
-            st.getdata();
-            int pos=-1*sizeof(st);
-            fp.seekp(pos,ios::cur);
-            fp.write((char*)&st,sizeof(student));
-            cout<<"\n\n\t Record Updated";
-            found=1;
-        }
-    }
-    fp.close();
-    if(found==0)
-        cout<<"\n\n Record Not Found ";
-    getch();
+	system("cls");
+
+	Modify *sub = new ModifyGrade();
+	CheckUserType *p = new CheckUserType(sub);
+
+	p->Reuqest();
+
+	delete sub;
+	delete p;
+
+	getch();
 }
 
-void delete_student()
+void delete_student_grade()
 {
-    int no;
-    system("cls");
-    cout<<"\n\n\n\tDelete Record";
-    cout<<"\n\nPlease Enter The roll number of student You Want To Delete";
-    cin>>no;
-    fp.open("student.dat",ios::in|ios::out);
-    fstream fp2;
-    fp2.open("Temp.dat",ios::out);
-    fp.seekg(0,ios::beg);
-    while(fp.read((char*)&st,sizeof(student)))
-    {
-        if(st.retrollno()!=no)
-        {
-            fp2.write((char*)&st,sizeof(student));
-        }
-    }
-    fp2.close();
-    fp.close();
-    remove("student.dat");
-    rename("Temp.dat","student.dat");
-    cout<<"\n\n\tRecord Deleted ..";
-    getch();
+	system("cls");
+	
+	Modify *sub = new DeleteGrade();
+	CheckUserType *p = new CheckUserType(sub);
+
+	p->Reuqest();
+
+	delete sub;
+	delete p;
+
+	getch();
 }
 
+void insert_student() {
+	system("cls");
 
-void class_result()
-{
-    system("cls");
-    fp.open("student.dat",ios::in);
-    if(!fp)
-    {
-        cout<<"ERROR!!! FILE COULD NOT BE OPEN\n\n\n Go To Entry Menu to create File";
-        cout<<"\n\n\n Program is closing ....";
-        getch();
-        exit(0);
-    }
+	Modify *sub = new InsertStudent();
+	CheckUserType *p = new CheckUserType(sub);
 
-    cout<<"\n\n\t\tALL STUDENTS RESULT \n\n";
-    cout<<"====================================================\n";
-    cout<<"Roll No. Name          P  C  M  E  CS  %age Grade\n";
-    cout<<"====================================================\n";
+	p->Reuqest();
 
-    while(fp.read((char*)&st,sizeof(student)))
-    {
-        st.show_tabular();
-    }
-    fp.close();
-    getch();
+	delete sub;
+	delete p;
+
+	getch();
+}
+void insert_course() {
+	system("cls");
+	
+	Modify *sub = new InsertCourse();
+	CheckUserType *p = new CheckUserType(sub);
+
+	p->Reuqest();
+
+	delete sub;
+	delete p;
+
+	getch();
 }
 
 void result()
 {
-    int ans,rno;
+	int ans;
+	string stuNo;
     char ch;
-    system("cls");
-    cout<<"\n\n\nRESULT MENU";
-    cout<<"\n\n\n1. Class Result\n\n2. Student Report Card\n\n3.Back to Main Menu";
-    cout<<"\n\n\nEnter Choice (1/2)? ";
+	menu.printResultMenu();
     cin>>ans;
     switch(ans)
     {
     case 1 :
-        class_result();
+		display_all();
         break;
     case 2 :
     {
+		string seemore;
         do
         {
             system("cls");
-            char ans;
-            cout<<"\n\nEnter Roll Number Of Student : ";
-            cin>>rno;
-            display_sp(rno);
-            cout<<"\n\nDo you want to See More Result (y/n)?";
-            cin>>ans;
+            cout <<"Enter Student Number: ";
+            cin >> stuNo;
+            display_single_student(stuNo);
+            cout <<"\nDo you want to See More Result (y/n)?";
+            cin >> seemore;
         }
-        while(ans=='y'||ans=='Y');
-
+        while(seemore =="y" || seemore == "Y");
         break;
     }
     case 3:

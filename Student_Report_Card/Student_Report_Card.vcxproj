@@ -145,18 +145,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Auth.cpp" />
+    <ClCompile Include="..\auth.cpp" />
+    <ClCompile Include="..\display.cpp" />
+    <ClCompile Include="..\modify.cpp" />
     <ClCompile Include="..\record.cpp" />
     <ClCompile Include="..\sqlite3.c" />
     <ClCompile Include="..\student.cpp" />
-    <ClCompile Include="..\student_report_card.cpp" />
+    <ClCompile Include="..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Auth.h" />
-    <ClInclude Include="..\DecoratorPattern.h" />
-    <ClInclude Include="..\ProxyPattern.h" />
+    <ClInclude Include="..\auth.h" />
+    <ClInclude Include="..\display.h" />
+    <ClInclude Include="..\menu.h" />
+    <ClInclude Include="..\modify.h" />
     <ClInclude Include="..\record.h" />
-    <ClInclude Include="..\Menu.h" />
     <ClInclude Include="..\student.h" />
     <ClInclude Include="..\student_report_card.h" />
     <ClInclude Include="stdafx.h" />

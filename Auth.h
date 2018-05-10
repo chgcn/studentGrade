@@ -8,42 +8,50 @@ static int AuthCallback(void * notused, int argc, char **argv, char **azColName)
 int Auth();
 int EnteringAndFetching();
 
-class PasswordHandle {
+class AccountHandle {
 public:
-    virtual ~PasswordHandle() { }
+    virtual ~AccountHandle() { }
 
     virtual void HandleRequest() = 0;
 
-    void SetSuccessor(PasswordHandle *succ) {
+    void SetSuccessor(AccountHandle *succ) {
         _succ = succ;
     }
 
-    PasswordHandle* GetSuccessor()const {
+    AccountHandle* GetSuccessor()const {
         return _succ;
     }
+
+	void setCount(int count) { wrongcount = count; }
+	void setState(bool state) { passwordstate = state; }
+	void setUsername(string s) { username = s; }
+	void setPassword(string s) { password = s; }
+
 	int getCount() { return wrongcount; }
 	bool getState() { return passwordstate; }
-
+	string getUsername() { return username; }
+	string getPassword() { return password; }
 	
 protected:
-    PasswordHandle() { _succ = nullptr; }
+    AccountHandle() { _succ = nullptr; }
 
-    PasswordHandle(PasswordHandle* succ) {
+    AccountHandle(AccountHandle* succ) {
         _succ = succ;
     }
 	int wrongcount = 0;
-	bool passwordstate;
+	bool passwordstate = false;
 private:
-    PasswordHandle* _succ;
-	
+    AccountHandle* _succ;
+	string username;
+	string password;
 };
 
-class CheckPassword :public PasswordHandle {
+class CheckPassword :public AccountHandle {
 public:
     CheckPassword() { }
 
-    CheckPassword(PasswordHandle* succ)
-        :PasswordHandle(succ) {
+    CheckPassword(AccountHandle* succ)
+        :AccountHandle(succ) {
     }
 
     void HandleRequest() {
@@ -62,12 +70,12 @@ public:
     }
 };
 
-class WrongPassword :public PasswordHandle {
+class WrongPassword :public AccountHandle {
 public:
     WrongPassword() { }
 
-    WrongPassword(PasswordHandle* succ)
-        :PasswordHandle(succ) {
+    WrongPassword(AccountHandle* succ)
+        :AccountHandle(succ) {
     }
 
     void HandleRequest() {

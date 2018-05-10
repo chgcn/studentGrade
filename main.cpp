@@ -20,24 +20,19 @@ void entry_menu()
     switch(ch2)
     {
     case '1':
-        system("cls");
-        write_student();
+        insert_student_grade();
         break;
     case '2':
-        display_all();
+		modify_student_grade();
         break;
     case '3':
-        int num;
-        system("cls");
-        cout<<"\n\n\tPlease Enter The roll number ";
-        cin>>num;
-        display_sp(num);
+		delete_student_grade();
         break;
     case '4':
-        modify_student();
+        insert_student();
         break;
     case '5':
-        delete_student();
+        insert_course();
         break;
     case '6':
         break;

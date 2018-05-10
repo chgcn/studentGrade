@@ -1,5 +1,7 @@
-#include "Auth.h"
+#include "auth.h"
 char * passwordc;
+AccountHandle *WrongPasswordIns = new WrongPassword();
+AccountHandle *Account = new CheckPassword(WrongPasswordIns);
 
 static int AuthCallback(void * notused, int argc, char **argv, char **azColName) {
 	int i;
@@ -27,12 +29,10 @@ static int AuthCallback(void * notused, int argc, char **argv, char **azColName)
 int Auth()
 {
 
-	PasswordHandle *WrongPasswordIns = new WrongPassword();
-	PasswordHandle *Password = new CheckPassword(WrongPasswordIns);
 	while(WrongPasswordIns->getCount() < 3)
 	{
-		Password->HandleRequest();
-		if (Password->getState())
+		Account->HandleRequest();
+		if (Account->getState())
 		{
 			return 0;
 		}
@@ -44,13 +44,16 @@ int Auth()
 int EnteringAndFetching()
 {
 	
-	string username, password;
+	string s;
 	cout << "Enter Username: ";
-	cin >> username;
+	cin >> s;
+	Account->setUsername(s);
 	cout << "Enter Password: ";
-	cin >> password;
-	passwordc = (char*)password.data();
-	string sqlstring = "SELECT Password FROM Auth WHERE Username = '" + username + "'";
+	cin >> s;
+	Account->setPassword(s);
+	passwordc = (char*)s.data();
+	string sqlstring = "SELECT UserPwd FROM SYS_USER WHERE UserName = '" + Account->getUsername() + "'";
+	const char * sql = sqlstring.data();
 
 	sqlite3 *db;
 	char *zerrmsg = 0;
@@ -65,10 +68,10 @@ int EnteringAndFetching()
 	if (rc) {
 		fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
 		sqlite3_close(db);
-		return(1);
+		return 1;
 	}
 
-	const char * sql = sqlstring.data();
+	
 	rc = sqlite3_exec(db, sql, AuthCallback, 0, &zerrmsg);
 	
 	struct sqlite3_stmt *selectstmt;
@@ -82,13 +85,14 @@ int EnteringAndFetching()
 		else
 		{
 			printf("record not found\n");
+			sqlite3_close(db);
 			return 1;
 		}
 	}
+	sqlite3_finalize(selectstmt);
 	if (rc != SQLITE_OK ) {
 		fprintf(stderr, "sql error: %s\n", zerrmsg);
 		sqlite3_free(zerrmsg);
-		return 1;
 	}
 	
 	sqlite3_close(db);

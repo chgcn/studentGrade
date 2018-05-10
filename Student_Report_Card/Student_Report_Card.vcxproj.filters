@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\student_report_card.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\record.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -27,7 +24,16 @@
     <ClCompile Include="..\sqlite3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Auth.cpp">
+    <ClCompile Include="..\auth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\modify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,16 +50,16 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\ProxyPattern.h">
+    <ClInclude Include="..\auth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DecoratorPattern.h">
+    <ClInclude Include="..\display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Auth.h">
+    <ClInclude Include="..\menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Menu.h">
+    <ClInclude Include="..\modify.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

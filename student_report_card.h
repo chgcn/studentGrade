@@ -20,10 +20,10 @@
 #include "sqlite3.h"
 #include "student.h"
 #include "record.h"
-#include "Auth.h"
-#include "ProxyPattern.h"
-#include "Menu.h"
-#include "DecoratorPattern.h"
+#include "auth.h"
+#include "modify.h"
+#include "menu.h"
+#include "display.h"
 
 #endif
 using namespace std;

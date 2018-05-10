@@ -18,9 +18,6 @@
     <ClCompile Include="..\record.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\student.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\sqlite3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\record.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\student_report_card.h">

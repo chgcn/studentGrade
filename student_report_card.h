@@ -18,7 +18,6 @@
 #include <string>
 
 #include "sqlite3.h"
-#include "student.h"
 #include "record.h"
 #include "auth.h"
 #include "modify.h"

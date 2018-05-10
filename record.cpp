@@ -1,7 +1,6 @@
 #include "record.h"
 
 fstream fp;
-student st;
 extern Menu &menu;
 extern char* dbc;
 
